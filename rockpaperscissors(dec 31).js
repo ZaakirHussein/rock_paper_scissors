@@ -83,7 +83,7 @@ function game(){
           return console.log(`In this round you picked: ${userAnswer} and the computer picked: ${computerChoice}. This is a tie. You get ${humanScore} and the computer gets ${computerScore} `)   
 }
 
-//Supposed to run the game five rounds. Issue here is that the prompt runs 6 times but console logs the results 5 times. 
+//Runs the playRound() function 5 times 
 for (let rounds = 0; rounds < 5; rounds++) {
      game();
 };
@@ -99,5 +99,5 @@ const finalResult = () => {
 
 console.log(finalResult());
 
-
+// All appears to be working soundly
 
