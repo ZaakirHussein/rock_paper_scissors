@@ -1,37 +1,50 @@
 // Rock, Paper, Scissors
 
-// Step 1: Begin with a function called computerPlay that will randomly return either ‘Rock’, ‘Paper’ or ‘Scissors’.
-const rockPaperScissorsArr = ['rock', 'paper', 'scissors']
+// Step 1: Create three buttons, one for each selection. 
+// Step 2: Add an event listener to the buttons that call your playRound function with the correct playerSelection every time a button is clicked. (you can keep the console.logs for this step)*/
+
+const rockButton = document.querySelector('#rock-button');
+const paperButton = document.querySelector('#paper-button');
+const scissorButton = document.querySelector('#scissors-button');
+ 
+rockButton.addEventListener('click', function() {
+     console.log(game("rock")) });
+
+paperButton.addEventListener('click', function() {
+     console.log(game("paper")) });
+     
+scissorButton.addEventListener('click', function() {
+     console.log(game("scissors")) });
+
+// Random Computer Selection. Array for the random generator to select from. 
+const rockPaperScissorsArr = ['rock', 'paper', 'scissors'];
 
 let computerChoice = " ";
 const computerPlay = () => {
      computerChoice = rockPaperScissorsArr[Math.floor(Math.random() * rockPaperScissorsArr.length)]
      return computerChoice
 };
+//Computer's Selection. Random computer picking function is assigned to the parameter used in the playRound() function.  
 
-let userAnswer = " " ;
-
-const userPlay = () => {
-     userAnswer = prompt("Rock, Paper, or Scissors?").toLowerCase();
-     return userAnswer
- };
- 
-
-/* Step 2: Write a function that plays a single round of Rock Paper Scissors. The function should take two parameters - 
-the playerSelection and computerSelection - and then return a string that declares the winner of the round like so: "You Lose! Paper beats Rock" */
-
-/* Here I am assigning the value of the parameters in the playRound() function to what the user types in the userPlay() prompt and the return value the computer 
-selects in the computerPlay() function. */
-const playerSelection = userAnswer;
 let computerSelection = computerPlay();
 
-// Initialized and used for tracking the score between user and AI. Left in the global scope to be accessed by the game() function.
+// Player's selection. Array for playerSelection variable. 
+let playerSelection = ' ';
+let userAnswer = playerSelection;
+
+// Score tallying
 let humanScore = 0;
 let computerScore = 0;
-let result = ' ';
+
+const scorePlayer = document.querySelector('.player-score-box');
+const scoreComp = document.querySelector('.computer-score-box');
+
+// Score tallying - Initialzes (value starts at 0) the score in HTML
+scorePlayer.textContent = `Your Score is: ${humanScore}`;
+scoreComp.textContent = `The computer's Score is: ${computerScore}`;
 
 // Function that plays a single round of Rock Paper Scissors.
-const playRound = (playerSelection, computerSelection) => {
+let playRound = (playerSelection, computerSelection) => {
      
      if (playerSelection === computerSelection){
           return result = 'It is a tie!'
@@ -70,34 +83,50 @@ Loops are covered in the next lesson. */
 let roundWon = 0;
 let roundLost = 0;
 
-function game(){
-     playRound(userPlay(),computerPlay());
+let resultText = ' ';
+
+function game(playerSelect){
+     let playerSelection = playerSelect;
+     playRound(playerSelection ,computerPlay());
+     scorePlayer.textContent = `Your Score is: ${humanScore}`;
+     scoreComp.textContent = `The computer's Score is: ${computerScore}`;
 
       if (result === 'You Win! Rock beats Scissors.' || result === 'You Win! Paper beats Rock.'|| result === 'You Win! Scissors beats Paper.' ){
-          console.log(`In this round you picked: ${userAnswer} and the computer picked: ${computerChoice}. You won this round!! You get ${humanScore} and the computer gets ${computerScore} `);
-          return roundWon++;
+          resultText = `In this round you picked: ${playerSelect} and the computer picked: ${computerChoice}. You won this round!! Your score is ${humanScore} and the computer's score is ${computerScore} `;
+          document.getElementById('result-list').textContent = resultText;
+          roundWon++;
+          return finalResult(); 
      } else if (result === 'You Lose! Paper beats Rock.' || result === 'You Lose! Scissors beats Paper.'|| result === 'You Lose! Rock beats Scissors.' ){ 
-          console.log(`In this round you picked: ${userAnswer} and the computer picked: ${computerChoice}. You lost this round. You get ${humanScore} and the computer gets ${computerScore} `);
-          return roundLost++;
+          resultText = `In this round you picked: ${playerSelect} and the computer picked: ${computerChoice}. You lost this round. Your score is ${humanScore} and the computer's score is ${computerScore} `;
+          document.getElementById('result-list').textContent = resultText;
+          roundLost++;
+          return finalResult();
      } else (result === 'It is a tie!')
-          return console.log(`In this round you picked: ${userAnswer} and the computer picked: ${computerChoice}. This is a tie. You get ${humanScore} and the computer gets ${computerScore} `)   
-}
-
-//Runs the playRound() function 5 times 
-for (let rounds = 0; rounds < 5; rounds++) {
-     game();
+          resultText = `In this round you picked: ${playerSelect} and the computer picked: ${computerChoice}. This is a tie. Your score is ${humanScore} and the computer's score is ${computerScore} `;
+          return document.getElementById('result-list').textContent = resultText
+  
 };
+
+// Announce a winner of the game once one player reaches 5 points.
+let finalMessage = document.querySelector('#winner-text');
 
 const finalResult = () => {
-     if (roundWon === roundLost){
-          return `It was a tie! Your final score was ${humanScore} and the computer scored ${computerScore}.`
-     }else if (roundWon > roundLost){
-          return `You won! Your final score was ${humanScore} and the computer scored ${computerScore}.`
-     }else (roundLost > roundWon)
-          return `You lost! Your final score was ${humanScore} and the computer scored ${computerScore}.`
-};
+if (roundWon >= 5){
+     finalMessage = `You won! Your final score was ${humanScore} and the computer scored ${computerScore}.`
+     return document.getElementById('winner-text').textContent = finalMessage;
+}else if (roundLost >= 5){
+     finalMessage = `You lost! Your final score was ${humanScore} and the computer scored ${computerScore}.`
+     return document.getElementById('winner-text').textContent = finalMessage;
+} else 
+     return console.log('Huh?')
 
-console.log(finalResult());
+}; 
 
-// All appears to be working soundly
+// End of game function needed below
 
+const endGame = () => {
+     
+}
+
+
+// All appears to be working well
